@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="20dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="vertical"
+           android:background="#FFFFAA">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="訊息通知"
+                android:textSize="30dp"
+                />
+            <TextView
+                android:id="@+id/DataL"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                />
+        </LinearLayout>
+
+
+
+
+</LinearLayout>

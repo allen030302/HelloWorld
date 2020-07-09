@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".BlankFragment3">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="請選擇用戶組"
+            android:textSize="30dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:textAlignment="center"
+            android:id="@+id/Text01">
+        </TextView>
+        <Spinner
+            android:id="@+id/notify_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="選擇用戶組"
+            android:textAlignment="center"
+            android:id="@+id/btn01">
+        </Button>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="我不是機器人"
+            android:id="@+id/btnrobot">
+
+        </Button>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="尚未驗證"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:paddingTop="10dp"
+            android:id="@+id/robotcheck"
+            android:textColor="@color/design_default_color_error">
+
+        </TextView>
+
+    </LinearLayout>
+
+</FrameLayout>

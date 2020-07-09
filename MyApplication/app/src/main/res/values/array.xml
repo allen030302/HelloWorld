@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="notify_array">
+        <item>一般使用者</item>
+        <item>企業使用者</item>
+        <item>系統管理員</item>
+    </array>
+</resources>
