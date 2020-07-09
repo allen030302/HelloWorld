@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String FILE_FOLDER = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "AboutView" + File.separator + "data";
     private static final String FILE_CSV = "about_data.csv";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -162,10 +163,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 Bundle bag=new Bundle();
-                bag.putFloat("BMI_EXTRA", BMI);
-                bag.putString("Page","2");
-                intent.putExtras(bag);
-                intent.setClass(MainActivity.this , OrderPage.class);
+//                bag.putFloat("BMI_EXTRA", BMI);
+//                bag.putString("Page","2");
+//                intent.putExtras(bag);
+//                intent.setClass(MainActivity.this , OrderPage.class);
+                intent.setClass(MainActivity.this , MainActivityTest.class);
                 startActivity(intent);
             }
         });

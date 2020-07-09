@@ -1,28 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.myapplication">
-
-    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
+    package="com.example.myapplication" >
 
     <uses-sdk android:minSdkVersion="26" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
+        android:extractNativeLibs="false"
         android:icon="@drawable/icon"
         android:label="BMI計算機"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
-        <activity android:name=".OrderPage"
-                  android:label="點餐"></activity>
-        <activity android:name=".MainActivity"
-            android:configChanges="orientation|screenSize">
+        android:theme="@style/AppTheme" >
+        <activity android:name=".MainActivityTest" >
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".OrderPage"
+            android:label="點餐" />
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|screenSize" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
