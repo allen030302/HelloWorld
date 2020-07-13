@@ -11,29 +11,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tabLayoutMain"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/TBMI"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BMI計算機" />
+            android:text="BMI計算機"
+            android:icon="@drawable/calculator"/>
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/TOrder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="訂餐" />
+            android:text="訂餐"
+            android:icon="@drawable/orderfood"/>
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/TSetting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="設定" />
+            android:text="設定"
+            android:icon="@drawable/gear"/>
         >
 
     </com.google.android.material.tabs.TabLayout>

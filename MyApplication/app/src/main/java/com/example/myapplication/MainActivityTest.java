@@ -30,23 +30,23 @@ public class MainActivityTest extends AppCompatActivity {
         TestmainPagerAdapter.addFragment(new BlankFragment3(),"設定");
 
         viewPager.setAdapter(TestmainPagerAdapter);
+        viewPager.setOffscreenPageLimit(3);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab_layout));
         tab_layout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 Toast.makeText(MainActivityTest.this, ""+tab.getText(), Toast.LENGTH_SHORT).show();
-
-//                switch () {
-//                    case R.id.nav1:
-//                        gotoBMI();
-//                        break;
-//                    case R.id.nav2:
-//                        gotoOrder();
-//                        break;
-//                    case R.id.nav3:
-//                        gotoSetting();
-//                        break;
-//                }
+                switch (tab.getPosition()) {
+                    case 0:
+                        viewPager.setCurrentItem(0);
+                        break;
+                    case 1:
+                        viewPager.setCurrentItem(1);
+                        break;
+                    case 2:
+                        viewPager.setCurrentItem(2);
+                        break;
+                }
             }
 
             @Override
@@ -65,76 +65,6 @@ public class MainActivityTest extends AppCompatActivity {
 
     }
 
-    private BlankFragment BMI;
-    private BlankFragment2 Order;
-    private BlankFragment3 Setting;
-
-    private void gotoBMI() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        if (BMI == null) BMI = new BlankFragment();
-
-        if (Order != null) fragmentTransaction.hide(Order);
-        if (Setting != null) fragmentTransaction.hide(Setting);
-        if (BMI.isAdded()){
-            fragmentTransaction.show(BMI);
-        }
-        else{
-            fragmentTransaction.add(R.id.fragment1,BMI,"BMI");
-        }
-
-//        fragmentTransaction.replace(R.id.fragment1, BMI,"BMI");
-//        if (fragmentTransaction.isAddToBackStackAllowed()){
-//            fragmentTransaction.addToBackStack(null);
-//        }
-
-        fragmentTransaction.commit();
-    }
-
-
-    private void gotoOrder() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        if (Order == null) Order = new BlankFragment2();
-
-        if (BMI != null) fragmentTransaction.hide(BMI);
-        if (Setting != null) fragmentTransaction.hide(Setting);
-        if (Order.isAdded()){
-            fragmentTransaction.show(Order);
-        }
-        else{
-            fragmentTransaction.add(R.id.fragment1,Order,"Order");
-        }
-
-//        fragmentTransaction.replace(R.id.fragment1, Order,"Order");
-//        if (fragmentTransaction.isAddToBackStackAllowed()){
-//            fragmentTransaction.addToBackStack(null);
-//        }
-
-        fragmentTransaction.commit();
-    }
-
-    private void gotoSetting() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        if (Setting == null) Setting = new BlankFragment3();
-
-        if (BMI != null) fragmentTransaction.hide(BMI);
-        if (Order != null) fragmentTransaction.hide(Order);
-        if (Setting.isAdded()){
-            fragmentTransaction.show(Setting);
-        }
-        else{
-            fragmentTransaction.add(R.id.fragment1,Setting,"Setting");
-        }
-
-//        fragmentTransaction.replace(R.id.fragment1, Setting,"Setting");
-//        if (fragmentTransaction.isAddToBackStackAllowed()){
-//            fragmentTransaction.addToBackStack(null);
-//        }
-
-        fragmentTransaction.commit();
-    }
 
 
 }

@@ -227,7 +227,10 @@ public class MainActivity extends AppCompatActivity {
         // 依照id判斷點了哪個項目並做相應事件
         if (id == R.id.nav1) {
             // 按下「設定」要做的事
-            Toast.makeText(this, "BMI計算機", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "BMI計算機", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent();
+            intent.setClass(MainActivity.this , MainActivity_test2.class);
+            startActivity(intent);
             return true;
         }
         else if (id == R.id.nav2) {
