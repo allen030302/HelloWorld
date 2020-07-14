@@ -5,18 +5,29 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.NotificationManager;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +35,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +47,8 @@ import com.google.android.material.navigation.NavigationView;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import ir.androidexception.filepicker.dialog.DirectoryPickerDialog;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -68,8 +83,6 @@ public class MainActivity extends AppCompatActivity {
         Re = findViewById(R.id.Re1);
        // editText3 = findViewById(R.id.edit3);
         tt=findViewById(R.id.edit3);
-
-
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         Stetho.initializeWithDefaults(this);
@@ -218,11 +231,40 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    String Folder = "";
+
+    private boolean permissionGranted(){
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    }
+    private void requestPermission(){
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+    }
+
+    private void saveCSV(String foldername){
+        if (foldername != ""){
+            CSV = new WriteData2CSVThread(DataList,foldername,FILE_CSV);
+            CSV.run();
+            Toast toast = Toast.makeText(this.getApplicationContext(), "匯出成功\n" + foldername + "/" + FILE_CSV, Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER,0,0);
+            LinearLayout toastView = (LinearLayout) toast.getView();
+            ImageView imageView = new ImageView(this.getApplicationContext());
+            imageView.setImageResource(R.drawable.android);
+            toastView.addView(imageView,0);
+            toast.show();
+        }
+        else {
+            Toast.makeText(this, "請選擇匯出路徑", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         // 取得點選項目的id
         int id = item.getItemId();
+
 
         // 依照id判斷點了哪個項目並做相應事件
         if (id == R.id.nav1) {
@@ -240,9 +282,18 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (id == R.id.nav3) {
             // 按下「關於」要做的事
-            CSV = new WriteData2CSVThread(DataList,FILE_FOLDER,FILE_CSV);
-            CSV.run();
-            Toast.makeText(this, "匯出成功", Toast.LENGTH_SHORT).show();
+            Folder = "";
+            if(permissionGranted()) {
+                DirectoryPickerDialog directoryPickerDialog = new DirectoryPickerDialog(this,
+                        () -> Toast.makeText(MainActivity.this, "Canceled!!", Toast.LENGTH_SHORT).show(),
+                        files -> saveCSV(files[0].getPath())
+                );
+                directoryPickerDialog.show();
+            }
+            else{
+                requestPermission();
+            }
+
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -273,6 +324,34 @@ public class MainActivity extends AppCompatActivity {
 
 
     };
+
+    private static final int PICKFILE_REQUEST_CODE = 0;
+
+    public void onBrowse() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        intent = Intent.createChooser(intent,"Choose a file");
+        startActivityForResult(intent, PICKFILE_REQUEST_CODE);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            Uri uri = data.getData();
+            if(uri != null){
+                Toast.makeText(this, data.getDataString(), Toast.LENGTH_LONG).show();
+
+            }
+            else{
+                Toast.makeText(this, "無效的檔案路徑!!", Toast.LENGTH_LONG).show();
+            }
+        }
+        else {
+            Toast.makeText(this, "取消選擇檔案!!", Toast.LENGTH_LONG).show();
+        }
+
+
+    }
 
 
 }
