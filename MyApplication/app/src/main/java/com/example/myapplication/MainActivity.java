@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -22,6 +24,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -277,7 +281,8 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (id == R.id.nav2) {
             // 按下「使用說明」要做的事
-            Toast.makeText(this, "訂餐", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "訂餐", Toast.LENGTH_SHORT).show();
+            NotificationMessage("訂餐");
             return true;
         }
         else if (id == R.id.nav3) {
@@ -351,6 +356,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    public void NotificationMessage(String message){
+        NotificationHelper notificationHelper = new NotificationHelper(this);
+        NotificationCompat.Builder nb = notificationHelper.getChannelNotification(message);
+        notificationHelper.getManager().notify(1, nb.build());
     }
 
 
