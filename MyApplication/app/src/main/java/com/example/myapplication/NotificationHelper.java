@@ -16,7 +16,6 @@ public class NotificationHelper extends ContextWrapper {
     public static final String channelID = "channelID";
     public static final String channelName = "Channel Name";
     private NotificationCompat.Builder mBuilder;
-    private PendingIntent pendingIntent;
     private NotificationManager mManager;
 
 
@@ -43,6 +42,13 @@ public class NotificationHelper extends ContextWrapper {
     }
 
     public NotificationCompat.Builder getChannelNotification(String message) {
+        PendingIntent pendingIntent;
+        if(this.equals(MainActivityTest.)){
+            pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivityTest.class), 0);
+        }
+        else {
+            pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
+        }
 
 
         return  mBuilder = new NotificationCompat.Builder(getApplicationContext(), channelID)
@@ -51,12 +57,9 @@ public class NotificationHelper extends ContextWrapper {
                 .setSmallIcon(R.drawable.android)
                 .setOngoing(true)
                 .setWhen(System.currentTimeMillis())
-                .setContentIntent(pendingIntent(MainActivity))
-                .setAutoCancel(false);
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
     }
 
-    public PendingIntent getPendingIntentActivity(Activity name){
-        return pendingIntent = PendingIntent.getActivity(this,0,new Intent(this,name.class),0);
-    }
 
 }
