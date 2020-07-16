@@ -36,7 +36,7 @@ import java.io.IOException;
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 
-public class BlankFragment extends Fragment {
+public class BlankFragment extends Fragment{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -24,9 +26,26 @@ public class OrderPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_page);
-        Float fl=(Float) getIntent().getExtras().getFloat("BMI_EXTRA");
-        String page = (String) getIntent().getExtras().getString("Page");
-        int P = Integer.parseInt(page);
+
+        int P = 0;
+        int Notification = 0;
+        String page;
+        try {
+            //Float fl=
+            Notification = (Integer)getIntent().getExtras().getInt("Notification") ;
+            page = (String) getIntent().getExtras().getString("Page");
+            P = Integer.parseInt(page);
+        }
+        catch (Exception e){
+
+        }
+
+        if(Notification == 1){
+            NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+            manager.cancelAll();
+            Notification = 0;
+        }
+
 
         Log.d("111", "onCreate: ");
 
