@@ -32,6 +32,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,6 +54,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ir.androidexception.filepicker.dialog.DirectoryPickerDialog;
+import ir.androidexception.filepicker.dialog.SingleFilePickerDialog;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -72,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigation_view;
     private Toolbar toolbar;
-    private WriteData2CSVThread CSV;
+    private WriteData2CSVThread CSVW;
+    private ReadCSVThread CSVR;
     private static final String FILE_FOLDER = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "AboutView" + File.separator + "data";
     private static final String FILE_CSV = "about_data.csv";
 
@@ -196,6 +199,7 @@ public class MainActivity extends AppCompatActivity {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+        navigation_view.getMenu().getItem(0).setChecked(true);
         navigation_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -208,7 +212,10 @@ public class MainActivity extends AppCompatActivity {
                 // 依照id判斷點了哪個項目並做相應事件
                 if (id == R.id.nav1) {
                     // 按下「BMI計算機」要做的事
-                    Toast.makeText(MainActivity.this, "BMI計算機", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, "BMI計算機", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent();
+                    intent.setClass(MainActivity.this , MainActivitySqlite.class);
+                    startActivity(intent);
                     return true;
                 }
                 else if (id == R.id.nav2) {
@@ -247,8 +254,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void saveCSV(String foldername){
         if (foldername != ""){
-            CSV = new WriteData2CSVThread(DataList,foldername,FILE_CSV);
-            CSV.run();
+            CSVW = new WriteData2CSVThread(DataList,foldername,FILE_CSV);
+            CSVW.run();
             Toast toast = Toast.makeText(this.getApplicationContext(), "匯出成功\n" + foldername + "/" + FILE_CSV, Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER,0,0);
             LinearLayout toastView = (LinearLayout) toast.getView();
@@ -259,6 +266,26 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             Toast.makeText(this, "請選擇匯出路徑", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void openCSV(String filename){
+        if (filename != ""){
+            CSVR = new ReadCSVThread(filename);
+            CSVR.run();
+            DataList.clear();
+            DataList.addAll(CSVR.arraycsv);
+
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+            itemTouchHelper.attachToRecyclerView(Re);
+            mainAdapter=new MainAdapter(DataList,getApplicationContext());
+            Re.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            Re.setAdapter(mainAdapter);
+
+            Toast.makeText(this, "匯入成功", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(this, "請選擇匯入檔案", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -282,7 +309,16 @@ public class MainActivity extends AppCompatActivity {
         else if (id == R.id.nav2) {
             // 按下「使用說明」要做的事
             //Toast.makeText(this, "訂餐", Toast.LENGTH_SHORT).show();
-            NotificationMessage("訂餐");
+            //NotificationMessage("訂餐");
+            if(permissionGranted()) {
+                SingleFilePickerDialog singleFilePickerDialog = new SingleFilePickerDialog(this,
+                        () -> Toast.makeText(MainActivity.this, "Canceled!!", Toast.LENGTH_SHORT).show(),
+                        files -> openCSV(files[0].getPath()));
+                singleFilePickerDialog.show();
+            }
+            else{
+                requestPermission();
+            }
             return true;
         }
         else if (id == R.id.nav3) {
@@ -364,6 +400,21 @@ public class MainActivity extends AppCompatActivity {
         notificationHelper.getManager().notify(1, nb.build());
     }
 
+    private long exitTime = 0;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
+            if((System.currentTimeMillis()-exitTime) > 2000){
+                Toast.makeText(getApplicationContext(), "再按一次退出程式", Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+                System.exit(0);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
 
+    }
 }
 
