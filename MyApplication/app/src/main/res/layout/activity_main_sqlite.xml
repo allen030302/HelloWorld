@@ -32,10 +32,11 @@
                 android:id="@+id/account"
                 android:layout_weight="2"
                 android:maxLength="16"
-                android:inputType="numberSigned"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="false"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
                 />
         </LinearLayout>
         <LinearLayout
@@ -52,20 +53,32 @@
                 android:id="@+id/password"
                 android:layout_weight="2"
                 android:maxLength="16"
-                android:inputType="numberSigned"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="false"
+                android:singleLine="true"
+                android:imeOptions="actionGo"
                 />
         </LinearLayout>
-        <Spinner
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:id="@+id/spinnersqliteaccount">
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="3">
 
-        </Spinner>
+            </TextView>
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="2"
+                android:id="@+id/spinnersqliteaccount">
+
+            </Spinner>
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
@@ -122,11 +135,11 @@
             android:enabled="false"
             android:id="@+id/buttonsqliterun"/>
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textSize="25dp"
             android:id="@+id/sqliteoutput"
-            android:text="請選擇操作模式開始使用!!"/>
+            android:text="請選擇操作模式開始執行!!"/>
 
 
 
