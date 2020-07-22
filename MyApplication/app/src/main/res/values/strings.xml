@@ -5,4 +5,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="my_site_key">6LfFlq4ZAAAAACxAuUJJ8D7tBMyVu_Z9bvOfS7fH</string>
+    <string name="title_activity_maps_search">Map</string>
 </resources>
