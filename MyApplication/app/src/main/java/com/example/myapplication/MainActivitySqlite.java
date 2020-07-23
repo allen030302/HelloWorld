@@ -125,6 +125,7 @@ public class MainActivitySqlite extends AppCompatActivity {
                         count = db.delete(DATABASE_TABLE,"_id="+AccountID[spinnerPosition],null);
                         output.setText("刪除紀錄成功:"+count);
                         sqlcommand.setText("Delete From Users Where _id  = "+AccountID[spinnerPosition]);
+                        output.setTextSize(TypedValue.COMPLEX_UNIT_DIP,25);
                         cleanbutton();
                         SqlgetAccount();
                         if(listnullcheck >= 1){
@@ -197,6 +198,7 @@ public class MainActivitySqlite extends AppCompatActivity {
                         if(accountV != null && !accountV.equals("")){
                             AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                             builder.setMessage("確定要刪除 "+ accountV +" ?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
+                            break;
                         }
                         else {
                             output.setText("請選擇刪除帳號!!");
