@@ -220,7 +220,10 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if (id == R.id.nav2) {
                     // 按下「訂餐」要做的事
-                    Toast.makeText(MainActivity.this, "訂餐", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, "訂餐", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent();
+                    intent.setClass(MainActivity.this , MainActivityApiAlbums.class);
+                    startActivity(intent);
                     return true;
                 }
                 else if (id == R.id.nav3) {
